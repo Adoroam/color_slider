@@ -1,6 +1,5 @@
 body {
     font-family: "raleway";
-    margin: 0;
      }
 a:hover { text-decoration: none;}
 .shadow { box-shadow: 0px 0px 5px rgb(0,0,0);}
@@ -9,8 +8,7 @@ a:hover { text-decoration: none;}
     padding: 1em;
 }
 .sliderForm {
-    width: 350px;
-    box-shadow: 0px 0px 5px rgb(0,0,0);
+
 }
 .sliderForm table {
     width: 100%;
@@ -18,27 +16,34 @@ a:hover { text-decoration: none;}
 .sliderForm input {
     width: 100%;
 }
-td { margin: 01em;}
+td { 
+    margin: 1em auto;
+    
+}
 .num {
     width: 50px;
 }
-.apply {
+.cell {
     text-align: center;
     cursor: pointer;
+    vertical-align: middle;
 }
 #apply {
-    padding: 0 1em ;
+    padding-top: 1.8em;
 }
 #clear {
-    padding: 0 1em;
+     padding-top: 1.8em;
 }
-.apply:hover{
+.cell:hover{
     background-color: #fff;
     box-shadow: 0px 0px 5px rgb(0,0,0);
 }
 .active {
     box-shadow: 0px 0px 6px rgb(0,100,0);
 }
-.label {
-    padding-left: 2em;
+.modalButton {
+    background-color: #fff;
+    color: #272e31;
+    box-shadow: 0px 0px 5px rgb(0,0,0);
+    width: 10em;
 }
