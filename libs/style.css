@@ -1,0 +1,39 @@
+html {height: 100%;}
+body {font-family: "raleway"; }
+a:hover { text-decoration: none;}
+.shadow { box-shadow: 0px 0px 5px rgb(0,0,0);}
+.center { text-align: center;}
+.sliderForm {
+    width: 350px;
+    box-shadow: 0px 0px 5px rgb(0,0,0);
+}
+.sliderForm table {
+    width: 100%;
+}
+.sliderForm input {
+    width: 100%;
+}
+td { margin: 01em;}
+.num {
+    width: 50px;
+}
+.apply {
+    text-align: center;
+    cursor: pointer;
+}
+#apply {
+    padding: 0 1em ;
+}
+#clear {
+    padding: 0 1em;
+}
+.apply:hover{
+    background-color: #fff;
+    box-shadow: 0px 0px 5px rgb(0,0,0);
+}
+.active {
+    box-shadow: 0px 0px 6px rgb(0,100,0);
+}
+.label {
+    padding-left: 2em;
+}

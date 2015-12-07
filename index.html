@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>color slider</title>
+       
+
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
+        <script src="libs/app.js"></script>
+        <link href='http://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
+  
+        <link rel="stylesheet" href="libs/ado.css">
+        <link rel="stylesheet" href="libs/style.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="Website Author" content="Anthony Stabile">
+    </head>
+
+    <body ng-app="ang" ng-controller="MainController">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <form action="" method="get" accept-charset="utf-8" class="sliderForm">
+                        <table class="table table-bordered">                          
+                            <tbody>
+                                <tr>
+                                    <td class="lightTxt label">Red</td>
+                                    <td><input type="range" class="slider red" max="255" ng-model="red" ng-change="rgbChange(red, green, blue);" ng-disabled="!activeTxt && !activeBg"></td>
+                                    <td class="num">{{red}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="lightTxt label">Green</td>
+                                    <td> <input type="range" class="slider green" max="255" ng-model="green" ng-change="rgbChange(red, green, blue);" ng-disabled="!activeTxt && !activeBg"></td>
+                                    <td class="num">{{green}}</td>
+                                </tr>
+                                  <tr>
+                                    <td class="lightTxt label">Blue</td>
+                                    <td><input type="range" class="slider blue" max="255" ng-model="blue" ng-change="rgbChange(red, green, blue);" ng-disabled="!activeTxt && !activeBg"></td>
+                                    <td class="num">{{blue}}</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3" class="lightTxt center" ng-style="rgb">Preview</td>
+                                </tr>
+                                 <tr>
+                                <tr>
+                                    <td rowspan="2" class="lightTxt apply" id="apply" ng-click="applyStyle();">Apply</td>
+                                    <td  class="lightTxt apply" ng-click="setText();" ng-class="{active: activeTxt}">Text</td>
+                                    <td rowspan="2" class="lightTxt apply" id="clear" ng-click="clearStyle();">Clear</td>
+                                </tr>
+                                 <tr>
+                                    <td  class="lightTxt apply" ng-click="setBg();" ng-class="{active: activeBg}">Background</td>
+                                </tr>
+                            </tbody>
+                        </table>                 
+                    </form>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" ng-style="bodyStyle">
+                    <h4>Whoa Crazy!</h4>
+                    <p>This is the body text that get's updated when you apply new colors.</p>
+                </div>
+            </div>
+        </div><!-- end container-fluid -->
+    </body>
+
+</html>
+            <!-- topbar and menu 
+            <header class="topBar blueBg">
+                <a ng-show="menuText == true;" class="menuText whiteTxt">menu</a>
+                <span class="glyphicon glyphicon-menu-hamburger whiteBg menuIcon" ng-click="menuClick();" ng-mouseenter="menuText = true;" ng-mouseleave="menuText= false;"></span>
+            </header>
+            <div class="menu lightBg" ng-show="menuShow == true">
+                <div ng-repeat="x in page | filter : {shoppable: false} : true" ng-class="{darkBg: activePage.entry==x.entry}" class="menuItemDiv">
+                    <a ng-click="menuSel($index)"><h4 class="menuItem whiteTxt">{{ x.entry }}</h4></a>
+                </div>
+            </div> end menu 
+            <div class="leftCover"></div> cover's left side of menu 
+            <img src="img/angularpoclogo2.png" class="angularLogo" ng-click="activePage=page[0];"/> logo 
+            <div class="row darkBg content">  
+                <h2 class="pageHead whiteTxt" ng-click="headerClick(activePage);">{{ activePage.head }}</h2> 
+                <div class="content" ng-include='activePage.url' id="content"></div>-->
