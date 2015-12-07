@@ -42,23 +42,21 @@ app.controller('MainController', ['$scope', function($scope) {
 
     $scope.set = function(item) {   
         if (item == 'bg') {
-            index = 0;
+            ind = 0;
             alt = 1;            
         }
         if (item == 'text') {
-            index = 1;    
+            ind = 1;    
             alt = 0;
         } 
-        if ($scope.active[index] ) {
-            $scope.active[index] = false;
+        if ($scope.active[ind] ) {
+            $scope.active[ind] = false;
             $scope.red = 0; $scope.green = 0; $scope.blue = 0;
         }   else {
-            $scope.active[index] = true;
-            if (standby[index].red || standby[index].green || standby[index].blue) {
-                $scope.red = standby[index].red;
-                $scope.green = standby[index].green;
-                $scope.blue = standby[index].blue;
-            } 
+            $scope.active[ind] = true;
+            $scope.red = standby[ind].red;
+            $scope.green = standby[ind].green;
+            $scope.blue = standby[ind].blue; 
         }
          if ($scope.active[alt]) {
             $scope.active[alt] = false;
@@ -84,6 +82,11 @@ app.controller('MainController', ['$scope', function($scope) {
         ];
         var x = 'rgb('+standby[0].red+','+standby[0].green+','+ standby[0].blue+')';
         var y = 'rgb('+standby[1].red+','+standby[1].green+','+ standby[1].blue+')';
-        $scope.rgb = {'background-color' :  x , 'color' : y};        
+        $scope.rgb = {'background-color' :  x , 'color' : y};   
+        if ($scope.active[0]) {
+            $scope.set('bg');
+        }   else if ($scope.active[1]) {
+            $scope.set('text');
+        }
     }
 }]);
