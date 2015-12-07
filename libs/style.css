@@ -1,8 +1,13 @@
-html {height: 100%;}
-body {font-family: "raleway"; }
+body {
+    font-family: "raleway";
+    margin: 0;
+     }
 a:hover { text-decoration: none;}
 .shadow { box-shadow: 0px 0px 5px rgb(0,0,0);}
 .center { text-align: center;}
+.content {
+    padding: 1em;
+}
 .sliderForm {
     width: 350px;
     box-shadow: 0px 0px 5px rgb(0,0,0);

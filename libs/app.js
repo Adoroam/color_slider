@@ -1,123 +1,89 @@
 var app = angular.module("ang", []);
 
 app.controller('MainController', ['$scope', function($scope) {
-    var standbyTxt = {red: "", blue: "", green: ""};
-    var standbyBg = {red: "", blue: "", green: ""};
-//pull local storage backgrounds
-    if (localStorage.redBg) {
-        $scope.red = 0;
-        standbyBg.red =  localStorage.redBg;
+//set standby variable
+    var standby =[
+        {red: "", blue: "", green: ""},
+        {red: "", blue: "", green: ""}
+    ] ;
+    $scope.active = [false, false];
+//clear scope colors
+    $scope.red = 0;
+    $scope.green = 0;
+    $scope.blue = 0;
+//set local storage to standby or set to clear colors
+    if (localStorage.backgroundred) {
+        standby =[
+            {red: localStorage.backgroundred, green: localStorage.backgroundgreen, blue: localStorage.backgroundblue},
+            {red: localStorage.textred, green: localStorage.textgreen, blue: localStorage.textblue}
+        ] ;
     }   else {
-        $scope.red = 0;
-        standbyBg.red =  0;
+        standby =[
+            {red: 255, green: 255, blue: 255},
+            {red: 0, green: 0, blue: 0}
+        ] ;
     }
-    if (localStorage.greenBg) {
-        $scope.green = 0;
-         standbyBg.green =  localStorage.greenBg;
-    }   else {
-        $scope.green = 0;
-        standbyBg.green = 0;
+
+//slider change save to standby and set preview
+    $scope.rgbInternal = function(r, g, b, index) {
+            standby[index].red = r ; standby[index].green = g ; standby[index].blue = b ;
+            var x = 'rgb('+standby[1].red+','+standby[1].green+','+ standby[1].blue+')';
+            var y = 'rgb('+standby[0].red+','+standby[0].green+','+ standby[0].blue+')';
+            $scope.rgb = {'background-color': y , 'color' : x};           
     }
-    if (localStorage.blueBg) {
-        $scope.blue =0;
-        standbyBg.blue = localStorage.blueBg;
-    }   else {
-        $scope.blue = 0;
-        standbyBg.blue = 0;
-    }
-//pull local storage text
-    if (localStorage.redTxt) {
-        $scope.red = 0;
-        standbyTxt.red = localStorage.redTxt;
-    }   else {
-        $scope.red = 0;
-        standbyTxt.red = 0;
-    }
-    if (localStorage.greenTxt) {
-        $scope.green = 0;
-        standbyTxt.green =  localStorage.greenTxt;
-    }   else {
-        $scope.green = 0;
-        standbyTxt.green = 0;
-    }
-    if (localStorage.blueTxt) {
-        $scope.blue = 0;
-        standbyTxt.blue =  localStorage.blueTxt;
-    }   else {
-        $scope.blue = 0;
-        standbyTxt.blue = 0;
-    }
-//slider change save to standby
     $scope.rgbChange = function(r, g, b) {   
-        if ($scope.activeTxt) {
-            pullTxt = 'rgb('+r+','+g+','+ b+')';
-            standbyTxt.red = r ;
-            standbyTxt.green = g ;
-            standbyTxt.blue = b ;
-            stay = 'rgb('+standbyBg.red+','+standbyBg.green+','+ standbyBg.blue+')';
-            $scope.rgb = {'background-color': stay , 'color' : pullTxt};     
+        if ($scope.active[1]) {
+            $scope.rgbInternal(r, g, b, 1);
         }
-        if ($scope.activeBg) {
-            pullBg = 'rgb('+r+','+g+','+ b+')';
-            standbyBg.red = r ;
-            standbyBg.green = g ;
-            standbyBg.blue = b ;        
-            stay = 'rgb('+standbyTxt.red+','+standbyTxt.green+','+ standbyTxt.blue+')';
-            $scope.rgb = {'background-color' :  pullBg , 'color' : stay};     
+        if ($scope.active[0]) {
+            $scope.rgbInternal(r, g, b, 0);
         }        
     };
 
-    $scope.setText = function(r, g, b) {   
-        if ($scope.activeTxt) {
-            $scope.activeTxt = false;
-            $scope.red = 0;
-            $scope.green = 0;
-            $scope.blue = 0;
-        }   else {
-            $scope.activeTxt = true;
-            if (standbyTxt.red) {$scope.red = standbyTxt.red;} 
-            if (standbyTxt.green) {$scope.green = standbyTxt.green;}  
-            if (standbyTxt.blue) {$scope.blue = standbyTxt.blue;}   
+    $scope.set = function(item) {   
+        if (item == 'bg') {
+            index = 0;
+            alt = 1;            
         }
-         if ($scope.activeBg) {
-            $scope.activeBg = false;
+        if (item == 'text') {
+            index = 1;    
+            alt = 0;
+        } 
+        if ($scope.active[index] ) {
+            $scope.active[index] = false;
+            $scope.red = 0; $scope.green = 0; $scope.blue = 0;
+        }   else {
+            $scope.active[index] = true;
+            if (standby[index].red || standby[index].green || standby[index].blue) {
+                $scope.red = standby[index].red;
+                $scope.green = standby[index].green;
+                $scope.blue = standby[index].blue;
+            } 
+        }
+         if ($scope.active[alt]) {
+            $scope.active[alt] = false;
         }    
     };
-
-     $scope.setBg = function(r, g, b) {   
-        if ($scope.activeBg) {
-            $scope.activeBg = false;
-            $scope.red = 0;
-            $scope.green = 0;
-            $scope.blue = 0;
-        }   else {
-            $scope.activeBg = true;
-            if (standbyBg.red) {$scope.red = standbyBg.red;} 
-            if (standbyBg.green) {$scope.green = standbyBg.green;}  
-            if (standbyBg.blue) {$scope.blue = standbyBg.blue;}   
-        }
-         if ($scope.activeTxt) {
-            $scope.activeTxt = false;
-        }  
-    };
     $scope.applyStyle =  function() {
-            localStorage.setItem('redTxt', standbyTxt.red);
-            localStorage.setItem('greenTxt', standbyTxt.green);
-            localStorage.setItem('blueTxt', standbyTxt.blue);    
-            localStorage.setItem('redBg', standbyBg.red);
-            localStorage.setItem('greenBg', standbyBg.green);
-            localStorage.setItem('blueBg', standbyBg.blue);
-            applyTxt = 'rgb('+localStorage.redTxt+','+localStorage.greenTxt+','+ localStorage.blueTxt+')';
-            applyBg = 'rgb('+localStorage.redBg+','+localStorage.greenBg+','+ localStorage.blueBg+')';
-            $scope.bodyStyle = {'background-color' :  applyBg , 'color' : applyTxt};         
-            $scope.rgb = {'background-color' :  applyBg , 'color' : applyTxt};        
+            localStorage.setItem('textred', standby[1].red);
+            localStorage.setItem('textgreen', standby[1].green);
+            localStorage.setItem('textblue', standby[1].blue);    
+            localStorage.setItem('backgroundred', standby[0].red);
+            localStorage.setItem('backgroundgreen', standby[0].green);
+            localStorage.setItem('backgroundblue', standby[0].blue);
+            var x = 'rgb('+localStorage.backgroundred+','+localStorage.backgroundgreen+','+ localStorage.backgroundblue+')';
+            var y = 'rgb('+localStorage.textred+','+localStorage.textgreen+','+ localStorage.textblue+')';
+            $scope.bodyStyle = {'background-color' :  x , 'color' : y};         
+            $scope.rgb = {'background-color' :  x , 'color' : y};        
     }
     $scope.applyStyle();
     $scope.clearStyle = function() {
-        standbyTxt = {red: 0, blue: 0, green: 0};
-        standbyBg = {red: 255, blue: 255, green: 255};
-        applyTxt = 'rgb('+standbyTxt.red+','+standbyTxt.green+','+ standbyTxt.blue+')';
-        applyBg = 'rgb('+standbyBg.red+','+standbyBg.green+','+ standbyBg.blue+')';
-        $scope.rgb = {'background-color' :  applyBg , 'color' : applyTxt};        
+        standby = [
+            {red: 255, blue: 255, green: 255},
+            {red: 0, blue: 0, green: 0}
+        ];
+        var x = 'rgb('+standby[0].red+','+standby[0].green+','+ standby[0].blue+')';
+        var y = 'rgb('+standby[1].red+','+standby[1].green+','+ standby[1].blue+')';
+        $scope.rgb = {'background-color' :  x , 'color' : y};        
     }
 }]);
